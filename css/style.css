@@ -1,0 +1,54 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+#main {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-color: #79bb86; }
+  #main > div {
+    position: relative;
+    height: 100%;
+    width: 100%; }
+
+.city-select-wrapper {
+  position: relative;
+  height: 75%;
+  width: 100%;
+  bottom: -25%;
+  padding: 2.5em; }
+
+.city-selector {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff; }
+  .city-selector input,
+  .city-selector button {
+    color: #fff;
+    border-radius: 2.2em;
+    padding: 0.6em;
+    font-size: 1.2em; }
+  .city-selector input {
+    padding-left: 1.2em;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none; }
+    .city-selector input::first-line::before {
+      content: "kkk";
+      color: black; }
+  .city-selector button {
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background-color: inherit;
+    cursor: pointer; }
+    .city-selector button:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+      border: 1px solid #79bb86; }
+
+h2 {
+  font-size: 2.5em; }
