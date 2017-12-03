@@ -13,4 +13,8 @@ class MenuIcon extends React.Component {
   }
 }
 
+MenuIcon.propTypes = {
+  toggleMenu: React.PropTypes.func.isRequired
+}
+
 export default MenuIcon

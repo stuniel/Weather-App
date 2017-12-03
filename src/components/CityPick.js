@@ -1,47 +1,17 @@
 import React from 'react';
-import { getCurrentLocation } from '../functions';
-import Forecast from './Forecast';
 import CityList from './CityList';
 
 class CityPick extends React.Component {
   constructor() {
     super();
     this.goToCity = this.goToCity.bind(this);
-    this.loadCities = this.loadCities.bind(this);
-    // this.renderList = this.renderList.bind(this);
-    this.state = {
-      words: undefined
-    }
-  }
-
-  capitalize(input) {
-    const words = input.split(' ');
-    const newWord = []
-    words.forEach((word) => {
-      newWord.push(word.charAt(0).toUpperCase() + word.slice(1));
-    })
-    const word = newWord.join(" ");
-    return word
-  }
-
-  loadCities(e) {
-    const input = e.target.value;
-    const words = this.capitalize(input);
-    this.setState({
-      words: words
-    });
   }
 
   goToCity(e) {
     e.preventDefault();
     console.log('Entering City!');
-    const cityName = this.capitalize(this.cityInput.value);
-    if(this.props.pathname === "/") {
-      this.context.router.transitionTo(`city/${cityName}`)
-    } else {
-      this.context.router.transitionTo(`${cityName}`)
-      this.props.toggleMenu();
-    }
+    this.props.toggleMenu();
+    this.props.loadWeather(this.props.words);
   }
 
   render() {
@@ -54,13 +24,16 @@ class CityPick extends React.Component {
             city name?
           </h2>
           <div className="search-city">
-            <input type="text" required placeholder="City Name" defaultValue={getCurrentLocation()} ref={(input) => {this.cityInput = input}} onChange={(e) => { this.loadCities(e) }}
+            <input type="text" required placeholder="City Name" autoComplete="on" value={this.props.words} ref={(input) => {this.cityInput = input}} onChange={(e) => { this.props.loadCities(e) }}
             />
-          <CityList words={this.state.words} />
+          <CityList
+            cities={this.props.cities}
+            words={this.props.words}
+            updateInput={this.props.updateInput}
+          />
           </div>
           <button type="submit">Check Weather</button>
         </form>
-        <Forecast />
       </div>
     )
   }
@@ -69,9 +42,14 @@ class CityPick extends React.Component {
 CityPick.contextTypes = {
   router: React.PropTypes.object
 }
-//
-// CityPick.propTypes = {
-//   toggleMenu: React.PropTypes.func.isRequired
-// }
+
+CityPick.propTypes = {
+  toggleMenu: React.PropTypes.func.isRequired,
+  loadWeather: React.PropTypes.func.isRequired,
+  words: React.PropTypes.string,
+  loadCities: React.PropTypes.func.isRequired,
+  cities: React.PropTypes.array.isRequired,
+  updateInput: React.PropTypes.func.isRequired
+}
 
 export default CityPick;
