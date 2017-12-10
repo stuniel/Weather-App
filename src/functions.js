@@ -14,6 +14,18 @@ export function latinize(input) {
   return input.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 }
 
+export function dateConvert(date) {
+  const d = new Date(date*1000);
+  let hours = d.getHours();
+  let minutes = d.getMinutes();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0'+ minutes : minutes;
+  const time = hours + ":" + minutes
+  return (<span><strong>{time}</strong>{ampm}</span>)
+}
+
 // OpenWeatherMap API returns UTC time. To get the local time we need to subtract the difference in timezones (offset).
 export function localNoon(offset) {
   let localTime = 12-offset || 12;
@@ -143,6 +155,9 @@ export function imageIcon(icon) {
     '50d': mist,
     '50n': mist,
   }
-
-  return icons[icon.icon];
+  if(typeof icon === 'object') {
+    return icons[icon.icon]
+  } else {
+    return icons[icon]
+  }
 }

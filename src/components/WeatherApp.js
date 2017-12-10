@@ -32,10 +32,6 @@ class WeatherApp extends React.Component {
     }
   }
 
-  componentWillMount() {
-    return (<Loading/ >)
-  }
-
   componentDidMount() {
     if(this.state.cities[0] === undefined) {
       console.log('loaded cities');
@@ -43,7 +39,10 @@ class WeatherApp extends React.Component {
         cities: newCities
       })
     }
-    if(!this.state.words) { this.getCurrentLocation() };
+    if(!this.state.words) {
+      this.loadWeather();
+       this.getCurrentLocation();
+    }
   }
 
   toggleMenu() {
@@ -52,6 +51,7 @@ class WeatherApp extends React.Component {
   }
 
   getCurrentLocation() {
+    console.log("hi")
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
@@ -164,20 +164,21 @@ class WeatherApp extends React.Component {
     if(!this.state.todayWeather || !this.state.forecastWeather || !this.state.forecast) { return <Loading /> }
     return (
       <div className="weather-app-wrapper">
-        <Header
-          toggleMenu={this.toggleMenu}
-        />
-        <Today
-          todayWeather={this.state.todayWeather}
-          cityName={this.props.params.cityName}
-        />
-        <Forecast
-          forecastWeather={this.state.forecastWeather}
-          todayWeather={this.state.todayWeather}
-          forecast={this.state.forecast}
-        />
-
-        <div className="search-menu">
+        <div className="weather-app">
+          <div className="main-weather">
+            <Header
+              toggleMenu={this.toggleMenu}
+            />
+            <Today
+              todayWeather={this.state.todayWeather}
+              cityName={this.props.params.cityName}
+            />
+          </div>
+          <Forecast
+            forecastWeather={this.state.forecastWeather}
+            todayWeather={this.state.todayWeather}
+            forecast={this.state.forecast}
+          />
           <CityPick
             pathname={this.props.pathname}
             loadCities={this.loadCities}

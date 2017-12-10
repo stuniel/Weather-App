@@ -1,16 +1,10 @@
 import React from 'react';
-import Loading from './Loading';
 import { kelToCel } from '../functions';
 import { imageIcon } from '../functions';
 import { latinize } from '../functions';
 
 class Today extends React.Component {
   render() {
-    if(!this.props.todayWeather) {
-      return (
-        <Loading />
-      )
-    }
     const cityName = latinize(this.props.todayWeather.name);
     const icon = this.props.todayWeather.weather[0].icon;
     const tempValue = kelToCel(this.props.todayWeather.main.temp);

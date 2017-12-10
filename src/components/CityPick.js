@@ -16,24 +16,26 @@ class CityPick extends React.Component {
 
   render() {
     return (
-      <div className="city-select-wrapper">
-        <form className="city-selector" onSubmit={(e) => {this.goToCity(e)}}>
-          <h2>
-            What <br />
-            is the <br />
-            city name?
-          </h2>
-          <div className="search-city">
-            <input type="text" required placeholder="City Name" autoComplete="on" value={this.props.words} ref={(input) => {this.cityInput = input}} onChange={(e) => { this.props.loadCities(e) }}
-            />
-          <CityList
-            cities={this.props.cities}
-            words={this.props.words}
-            updateInput={this.props.updateInput}
-          />
-          </div>
-          <button type="submit">Check Weather</button>
-        </form>
+      <div className="search-menu">
+        <div className="city-select-wrapper">
+          <form className="city-selector" onSubmit={(e) => {this.goToCity(e)}}>
+            <h2>
+              What <br />
+              is the <br />
+              city name?
+            </h2>
+            <div className="search-city">
+              <input type="text" required placeholder="City Name" autoComplete="on" value={this.props.words} ref={(input) => {this.cityInput = input}} onChange={(e) => { this.props.loadCities(e) }}
+              />
+              <CityList
+                cities={this.props.cities}
+                words={this.props.words}
+                updateInput={this.props.updateInput}
+              />
+            </div>
+            <button type="submit">Check Weather</button>
+          </form>
+        </div>
       </div>
     )
   }

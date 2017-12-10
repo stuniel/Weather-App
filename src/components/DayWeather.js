@@ -7,6 +7,7 @@ class DayWeather extends React.Component {
     const todayForecast = forecast[forecast.length-1];
     const day = todayForecast.day;
     const icon = todayForecast.icon;
+    console.log(icon)
     const tempMax = todayForecast.tempMax;
     const tempMin = todayForecast.tempMin;
 

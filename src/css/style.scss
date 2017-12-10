@@ -8,8 +8,23 @@ $break-small: 576px;
 $break-medium: 768px;
 $break-large: 992px;
 $break-extra-large: 1200px;
+$minimal-height: 576px;
+$medium-height: 700px;
+
+@mixin full-height($height) {
+    height: 100vh !important;
+    min-height: $height;
+    height: $height;
+}
+
+@mixin flex-box($direction, $justify) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+}
 
 body {
+  overflow-y: visible;
 }
 
 * {
@@ -21,17 +36,20 @@ body {
 
 #main {
   position: absolute;
-  height: 100vh;
+  overflow-x: hidden;
+  height: 100% !important;
+  @include full-height($minimal-height);
   width: 100vw;
   background-color: $back-color;
   &>div {
     position: relative;
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
+    @include flex-box(column, center);
     align-items: center;
-    justify-content: center;
+  }
+  @media screen and (min-height: $minimal-height) {
+    position: fixed;
   }
 }
 
@@ -39,6 +57,7 @@ body {
   position:fixed;
   top:50%;
   left:50%;
+
   div {
     width:200px;
     height:200px;
@@ -72,91 +91,71 @@ body {
   position: relative;
   height: 100%;
   width: 100%;
-  bottom: 0;
+  // top: 50%;
+  // transform: translateY(-50%);
+  top: 0;
   color: $main-font-color;
-  background-color: $primary-color;
   text-transform: uppercase;
+  &:before {
+    content:'';
+    width:90%;
+    height:90px;
+    box-shadow: 0 40px 80px rgba(100, 100, 100, 0.8);
+    position:absolute;
+    bottom:0px;
+    left:5%;
+  }
+  @media screen and (min-width: $break-medium) {
+    width: calc(100% - 10vw);
+    height: calc(100% - 10vw);
+    @media screen and (max-height: $medium-height) {
+      height: 500px;
+    }
+  }
+  // @media screen and (min-width: $break-large) {
+  //   width: $break-large;
+  // }
+  // @media screen and (min-width: $break-extra-large) {
+  // }
+}
+
+.weather-app {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: visible;
   @media screen and (min-width: $break-small) {
     overflow: hidden;
   }
-  @media screen and (min-width: $break-medium) {
-    width: $break-medium;
-    height: 70vh;
-  }
-  @media screen and (min-width: $break-large) {
-    width: $break-large;
-  }
-  @media screen and (min-width: $break-extra-large) {
-  }
 }
 
-.city-selector {
+.main-weather {
   position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  // align-items: center;
-  justify-content: space-between;
-  color: $main-font-color;
-  input,
-  button {
-    color: $main-font-color;
-    border-radius: 2.2em;
-    padding: 0.6em;
-    font-size: 1.2em;
-  }
-  input {
-    padding-left: 1.2em;
-    background-color: $input-color;
-    border: none;
-    outline: none;
-  }
-  button {
-    text-align: center;
-    border: 1px solid $input-color;
-    background-color: inherit;
-    cursor: pointer;
-    &:hover {
-      background-color: $input-color;
-      border: 1px solid $secondary-color;
-    }
-  }
-}
-
-.search-city {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
+  top: 0;
   width: 100%;
-  transition: all 0.2s;
-  ul {
-    text-transform: capitalize;
-    position: absolute;
-    width: 100%;
-    top: 100%;
-    list-style: none;
-    li {
-      padding: 0.6em;
-      padding-left: 1.2em;
-      background-color: rgba(0, 0, 0, .1);
-      border-top: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 1.2em;
-      &:nth-child(1) {
-        border: none;
-      }
-      &:hover {
-        background-color: rgba(255, 255, 255, .6);
-      }
-    }
+  height: 70%;
+  background-color: $primary-color;
+  @media screen and (min-width: $break-medium) {
+    background-color: #9DC3C2;
+    float: left;
+    width: 40%;
+    height: 100%;
   }
+}
+
+.menu-icon {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 15%;
 }
 
 .search-menu {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100% !important;
+  @include full-height($minimal-height);
   width: 100vw;
   background-color: $secondary-color;
   z-index: 10;
@@ -180,22 +179,90 @@ body {
     width: 100%;
     top: -100%;
   }
+  @media screen and (min-width: $break-medium) {
+    float: left;
+    width: 100%;
+    height: 100% !important;
+  }
 }
-
 
 .city-select-wrapper {
-  position: fixed;
-  height: 75%;
+  position: relative;
+  height: 100%;
   width: 100%;
-  top: 25%;
+  top: 0;
   padding: 2.5em;
+  @media screen and (min-width: $break-medium) {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: $break-medium;
+  }
 }
 
-.menu-icon {
+.city-selector {
   position: relative;
-  top: 0;
+  min-height: 100%;
+  @include flex-box(column, flex-end);
+  color: $main-font-color;
+  h2 {
+    margin-bottom: 2em;
+  }
+  input,
+  button {
+    color: $main-font-color;
+    border-radius: 2.2em;
+    padding: 0.6em;
+
+    font-size: 1.2em;
+  }
+  input {
+    padding-left: 1.2em;
+    background-color: $input-color;
+    border: none;
+    outline: none;
+  }
+  button {
+    text-align: center;
+    border: 1px solid $input-color;
+    margin-top: 4em;
+    background-color: inherit;
+    cursor: pointer;
+    &:hover {
+      background-color: $input-color;
+      border: 1px solid $secondary-color;
+    }
+  }
+}
+
+.search-city {
+  @include flex-box(column, space-between);
+  position: relative;
   width: 100%;
-  height: 10%;
+  transition: all 0.2s;
+}
+
+.auto-complete {
+  text-transform: capitalize;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  list-style: none;
+  li {
+    padding: 0.6em;
+    padding-left: 1.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, .1);
+    border-top: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 1.2em;
+    cursor: pointer;
+    &:nth-child(1) {
+      border: none;
+    }
+    &:hover {
+      background-color: rgba(255, 255, 255, .6);
+    }
+  }
 }
 
 .menu {
@@ -264,21 +331,20 @@ body {
     width: 0%;
     left: 50%;
   }
+  @media screen and (min-width: $break-small) {
+
+  }
 }
 
 .today-weather {
   position: relative;
-  height: 70%;
+  height: 100%;
   width: 100%;
   padding: 0 2.5em;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex-box(column, space-between);
   align-items: center;
   .today-top {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    @include flex-box(column, space-between);
     align-items: center;
     h2 {
       font-size: 20pt;
@@ -288,9 +354,7 @@ body {
     }
   }
   .temp-desc {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    @include flex-box(column, space-between);
     align-items: center;
   }
   .temperature {
@@ -298,6 +362,7 @@ body {
   }
   .description {
     font-size: 14pt;
+    margin-bottom: 2em;
   }
   img {
     width: 75%;
@@ -306,44 +371,75 @@ body {
     max-width: 200px;
     width: 100%;
   }
+  @media screen and (min-width: $break-medium) {
+    height: 85%;
+  }
 }
 
 .forecast-weather {
   position: relative;
-  height: 20%;
+  height: 30%;
   width: 100%;
   padding: 0 2.5em;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @include flex-box(column, center);
   align-items: center;
+  background-color: $primary-color;
+  @media screen and (min-width: $break-medium) {
+    @include flex-box(column, center);
+    float: right;
+    width: 60%;
+    height: 100%;
+  }
 }
+
 .four-days {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  @include flex-box(row, center);
+  // @media screen and (min-width: $break-medium) {
+  //   @include flex-box(row, space-between);
+  // }
+  .daily-box {
+    @include flex-box(column, space-between);
+    align-items: center;
+    height: 100px;
+    width: 100px;
+    svg {
+      max-width: 100%;
+      height: 50px;
+    }
+    .temp{
+      width: 100%;
+      @include flex-box(row, center);
+      align-items: flex-start;
+    }
+    .min {
+      color: #777;
+      padding-left: 5px;
+    }
+  }
 }
-.daily-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100px;
-  width: 100px;
-  svg {
-    max-width: 100%;
-    height: 50px;
+
+.detailed-forecast {
+  width: 100%;
+  @include flex-box(column, space-between);
+  padding-top: 2em;
+  li {
+    @include flex-box(row, center);
+    padding: 1em 0;
+    div {
+      width: 50%;
+      margin: 0 1em;
+      &:nth-child(1) {
+        text-align: right;
+      }
+      &:nth-child(2) {
+        text-transform: none;
+      }
+    }
   }
-  .temp{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  .min {
-    color: #777;
-    padding-left: 5px;
+  display: none;
+  @media screen and (min-width: $break-medium) {
+    display: inherit;
   }
 }
 
