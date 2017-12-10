@@ -112,9 +112,10 @@ body {
       height: 500px;
     }
   }
-  // @media screen and (min-width: $break-large) {
-  //   width: $break-large;
-  // }
+  @media screen and (min-width: $break-extra-large) {
+    width: $break-extra-large * 0.9;
+    height: calc(100% - 10vw);
+  }
   // @media screen and (min-width: $break-extra-large) {
   // }
 }
