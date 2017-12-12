@@ -1,6 +1,7 @@
 # Weather-App
 Weather App created in React.  
-It collects the weather and forecast data from OpenWeatherMap API and displays it for chosen city. It also uses geolocation to show the weather for current place.
+It collects the weather and forecast data from OpenWeatherMap API and displays it for chosen city. It also uses geolocation to show the weather for current place.  
+See it in action here: https://stuniel.github.io/Weather-App-Production/ (allow location). 
 
 ## Built With
 * [ReactJS](https://reactjs.org/) - JavaScript library
