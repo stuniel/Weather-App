@@ -56,8 +56,8 @@ class WeatherApp extends React.Component {
       navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5480a101c283186e7f06b86000f49ce1`;
-        const fiveUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=5480a101c283186e7f06b86000f49ce1`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=5480a101c283186e7f06b86000f49ce1`;
+        const fiveUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=5480a101c283186e7f06b86000f49ce1`;
         console.log('got current location');
         this.getWeatherStatus(url, fiveUrl);
       })
@@ -69,8 +69,8 @@ class WeatherApp extends React.Component {
       city = 'Barcelona';
       this.setState({ words: city });
     }
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5480a101c283186e7f06b86000f49ce1`;
-    const fiveUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=5480a101c283186e7f06b86000f49ce1`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5480a101c283186e7f06b86000f49ce1`;
+    const fiveUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=5480a101c283186e7f06b86000f49ce1`;
     this.getWeatherStatus(url, fiveUrl);
     this.setState({ words: '' });
   }
@@ -103,7 +103,7 @@ class WeatherApp extends React.Component {
     const lat = day.coord.lat;
     const timestamp = day.dt;
     const apiKey = 'H3G9GQFW2RGF';
-    const url = `http://api.timezonedb.com/v2/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lon}`;
+    const url = `https://api.timezonedb.com/v2/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lon}`;
     // const url = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lon}&timestamp=${timestamp}&key=AIzaSyA8iM1MqBRkHbI69Bu5n1Ik2b7oUDZGVHA`;
     const timeOffset = axios.get(url)
     .then(response => {
