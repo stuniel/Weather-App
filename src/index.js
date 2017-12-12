@@ -7,15 +7,16 @@ import WeatherApp from './components/WeatherApp';
 import NotFound from './components/NotFound';
 
 const Root = () => {
-    return (
-      <BrowserRouter>
-        <div>
-          <Match exactly pattern="/" component={WeatherApp} />
-          <Match pattern="/city/:cityName" component={WeatherApp} />
-          <Miss component={NotFound} />
-        </div>
-      </BrowserRouter>
-    )
+  const repo = `/${window.location.pathname.split('/')[1]}`;
+  return (
+    <BrowserRouter basename={repo}>
+      <div>
+        <Match exactly pattern="/" component={WeatherApp} />
+        <Match pattern="/city/:cityName" component={WeatherApp} />
+        <Miss component={NotFound} />
+      </div>
+    </BrowserRouter>
+  )
 }
 
 render(<Root/>, document.querySelector("#main"));

@@ -102,12 +102,19 @@ class WeatherApp extends React.Component {
     const lon = day.coord.lon;
     const lat = day.coord.lat;
     const timestamp = day.dt;
-    const url = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lon}&timestamp=${timestamp}&key=AIzaSyA8iM1MqBRkHbI69Bu5n1Ik2b7oUDZGVHA`;
+    const apiKey = 'H3G9GQFW2RGF';
+    const url = `http://api.timezonedb.com/v2/get-time-zone?key=${apiKey}&format=json&by=position&lat=${lat}&lng=${lon}`;
+    // const url = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lon}&timestamp=${timestamp}&key=AIzaSyA8iM1MqBRkHbI69Bu5n1Ik2b7oUDZGVHA`;
     const timeOffset = axios.get(url)
     .then(response => {
-      this.setState({ timeOffset: (response.data.rawOffset/3600) })
-      return (response.data.rawOffset/3600)
+      this.setState({ timeOffset: (response.data.gmtOffset/3600) })
+      return (response.data.gmtOffset/3600)
     })
+    // const timeOffset = axios.get(url)
+    // .then(response => {
+    //   this.setState({ timeOffset: (response.data.rawOffset/3600) })
+    //   return (response.data.rawOffset/3600)
+    // })
     console.log('fetched time')
     return timeOffset;
   }
